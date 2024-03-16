@@ -152,8 +152,6 @@ fun CardForm(){
                 Text(text = "INICIAR SESIÓN")
             }
         }
-
-
     }
 }
 
