@@ -8,13 +8,16 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.tec.gamermvvmapp.presentation.screens.login.components.LoginBottomBar
 import com.tec.gamermvvmapp.presentation.screens.login.components.LoginContent
 import com.tec.gamermvvmapp.presentation.ui.theme.GamerMVVMAppTheme
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun LoginScreen() {
+fun LoginScreen(navController: NavHostController) {
 
     Scaffold(
         topBar = {},
@@ -22,7 +25,7 @@ fun LoginScreen() {
                   LoginContent()
         },
         bottomBar = {
-            LoginBottomBar()
+            LoginBottomBar(navController)
         }
     )
 
@@ -38,7 +41,7 @@ fun GreetingPreview() {
             color = MaterialTheme.colorScheme.background
         ) {
 
-            LoginScreen()
+            LoginScreen(rememberNavController())
 
         }
     }
