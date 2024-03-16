@@ -1,4 +1,4 @@
-package com.tec.gamermvvmapp.ui.theme
+package com.tec.gamermvvmapp.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

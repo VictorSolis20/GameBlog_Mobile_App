@@ -1,6 +1,5 @@
-package com.tec.gamermvvmapp.screens.login.components
+package com.tec.gamermvvmapp.presentation.screens.login.components
 
-import android.support.v4.os.IResultReceiver2.Default
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer

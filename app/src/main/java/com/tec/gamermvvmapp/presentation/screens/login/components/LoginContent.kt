@@ -1,10 +1,9 @@
-package com.tec.gamermvvmapp.screens.login.components
+package com.tec.gamermvvmapp.presentation.screens.login.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,27 +16,29 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardColors
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tec.gamermvvmapp.R
-import com.tec.gamermvvmapp.screens.login.LoginScreen
-import com.tec.gamermvvmapp.ui.theme.Darkgray500
-import com.tec.gamermvvmapp.ui.theme.GamerMVVMAppTheme
-import com.tec.gamermvvmapp.ui.theme.Red500
+import com.tec.gamermvvmapp.presentation.components.DefaultButton
+import com.tec.gamermvvmapp.presentation.components.DefaultTextField
+import com.tec.gamermvvmapp.presentation.ui.theme.Darkgray500
+import com.tec.gamermvvmapp.presentation.ui.theme.GamerMVVMAppTheme
+import com.tec.gamermvvmapp.presentation.ui.theme.Red500
 
 @Composable
 fun LoginContent(){
@@ -81,6 +82,14 @@ fun BoxHeader(){
 
 @Composable
 fun CardForm(){
+
+    var email by remember {
+        mutableStateOf("")
+    }
+    var password by remember {
+        mutableStateOf("")
+    }
+
     Card(
         modifier = Modifier
             .padding(start = 40.dp, end = 40.dp, top = 200.dp)
@@ -108,49 +117,26 @@ fun CardForm(){
                 fontSize = 12.sp,
                 color = Color.Gray
             )
-            OutlinedTextField(
+            DefaultTextField(
                 modifier = Modifier.padding(top = 25.dp),
-                value = "",
-                onValueChange = { },
-                label =  {
-                    Text(text = "Correo electrónico")
-                },
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Email,
-                        contentDescription = "",
-                        tint = Color.White
-                    )
-                }
+                value = email,
+                onValueChange = {email = it},
+                label = "Correo electrónico",
+                icon = Icons.Default.Email,
+                keyboardType = KeyboardType.Email
             )
-            OutlinedTextField(
+            DefaultTextField(
                 modifier = Modifier.padding(top = 5.dp),
-                value = "",
-                onValueChange = { },
-                label =  {
-                    Text(text = "Contraseña")
-                },
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Lock,
-                        contentDescription = "",
-                        tint = Color.White
-                    )
-                }
+                value = password,
+                onValueChange = {password = it},
+                label = "Contraseña",
+                icon = Icons.Default.Lock,
+                hideText = true
             )
-            Button(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 45.dp),
+            DefaultButton(
+                text = "INICIAR SESIÓN",
                 onClick = {  }
-            ) {
-                Icon(
-                    imageVector = Icons.Default.ArrowForward,
-                    contentDescription = ""
-                )
-                Spacer(modifier = Modifier.width(10.dp))
-                Text(text = "INICIAR SESIÓN")
-            }
+            )
         }
     }
 }
