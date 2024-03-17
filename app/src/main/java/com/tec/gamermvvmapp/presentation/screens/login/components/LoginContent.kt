@@ -34,6 +34,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import com.tec.gamermvvmapp.R
 import com.tec.gamermvvmapp.presentation.components.DefaultButton
@@ -44,96 +45,87 @@ import com.tec.gamermvvmapp.presentation.ui.theme.GamerMVVMAppTheme
 import com.tec.gamermvvmapp.presentation.ui.theme.Red500
 
 @Composable
-fun LoginContent(viewModel: LoginViewModel){
+fun LoginContent(viewModel: LoginViewModel = hiltViewModel()){
     Box(
         modifier = Modifier
             .fillMaxWidth(),
 
     ) {
-            BoxHeader()
-            CardForm(viewModel)
-    }
-}
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(280.dp)
+                .background(Red500)
+        ){
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Image(
+                    modifier = Modifier.height(130.dp),
+                    painter = painterResource(id = R.drawable.control),
+                    contentDescription = "Control de xbox 360"
+                )
+                Text(
+                    text = "FIREBASE MVVM"
+                )
+            }
 
-@Composable
-fun BoxHeader(){
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(280.dp)
-            .background(Red500)
-    ){
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Image(
-                modifier = Modifier.height(130.dp),
-                painter = painterResource(id = R.drawable.control),
-                contentDescription = "Control de xbox 360"
-            )
-            Text(
-                text = "FIREBASE MVVM"
-            )
         }
+        Card(
+            modifier = Modifier
+                .padding(start = 40.dp, end = 40.dp, top = 200.dp)
+                .background(Darkgray500)
+        ){
 
-    }
-}
-
-@Composable
-fun CardForm(viewModel: LoginViewModel){
-
-    Card(
-        modifier = Modifier
-            .padding(start = 40.dp, end = 40.dp, top = 200.dp)
-            .background(Darkgray500)
-    ){
-
-        Column(
-            modifier = Modifier.padding(horizontal = 20.dp)
-        ) {
-            Text(
-                modifier = Modifier
-                    .padding(
-                        top = 40.dp,
-                        bottom = 0.dp,
-                        start = 0.dp,
-                        end = 0.dp
-                    ),
-                text = "LOGIN",
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold
-            )
-            Spacer(modifier = Modifier.height(10.dp))
-            Text(
-                text = "Por favor inicia sesión para continuar",
-                fontSize = 12.sp,
-                color = Color.Gray
-            )
-            DefaultTextField(
-                modifier = Modifier.padding(top = 25.dp),
-                value = viewModel.email.value,
-                onValueChange = {viewModel.email.value = it},
-                label = "Correo electrónico",
-                icon = Icons.Default.Email,
-                keyboardType = KeyboardType.Email
-            )
-            DefaultTextField(
-                modifier = Modifier.padding(top = 5.dp),
-                value = viewModel.password.value,
-                onValueChange = {viewModel.password.value = it},
-                label = "Contraseña",
-                icon = Icons.Default.Lock,
-                hideText = true
-            )
-            DefaultButton(
-                modifier = Modifier.fillMaxWidth().padding(vertical = 40.dp),
-                text = "INICIAR SESIÓN",
-                onClick = {
-                    Log.d("LoginContent", "Email: ${viewModel.email.value}")
-                    Log.d("LoginContent", "Password: ${viewModel.password.value}")
-                }
-            )
+            Column(
+                modifier = Modifier.padding(horizontal = 20.dp)
+            ) {
+                Text(
+                    modifier = Modifier
+                        .padding(
+                            top = 40.dp,
+                            bottom = 0.dp,
+                            start = 0.dp,
+                            end = 0.dp
+                        ),
+                    text = "LOGIN",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                Text(
+                    text = "Por favor inicia sesión para continuar",
+                    fontSize = 12.sp,
+                    color = Color.Gray
+                )
+                DefaultTextField(
+                    modifier = Modifier.padding(top = 25.dp),
+                    value = viewModel.email.value,
+                    onValueChange = {viewModel.email.value = it},
+                    label = "Correo electrónico",
+                    icon = Icons.Default.Email,
+                    keyboardType = KeyboardType.Email
+                )
+                DefaultTextField(
+                    modifier = Modifier.padding(top = 5.dp),
+                    value = viewModel.password.value,
+                    onValueChange = {viewModel.password.value = it},
+                    label = "Contraseña",
+                    icon = Icons.Default.Lock,
+                    hideText = true
+                )
+                DefaultButton(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 40.dp),
+                    text = "INICIAR SESIÓN",
+                    onClick = {
+                        Log.d("LoginContent", "Email: ${viewModel.email.value}")
+                        Log.d("LoginContent", "Password: ${viewModel.password.value}")
+                    }
+                )
+            }
         }
     }
 }
