@@ -1,5 +1,6 @@
 package com.tec.gamermvvmapp.presentation.screens.login.components
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -33,25 +34,24 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
 import com.tec.gamermvvmapp.R
 import com.tec.gamermvvmapp.presentation.components.DefaultButton
 import com.tec.gamermvvmapp.presentation.components.DefaultTextField
+import com.tec.gamermvvmapp.presentation.screens.login.LoginViewModel
 import com.tec.gamermvvmapp.presentation.ui.theme.Darkgray500
 import com.tec.gamermvvmapp.presentation.ui.theme.GamerMVVMAppTheme
 import com.tec.gamermvvmapp.presentation.ui.theme.Red500
 
 @Composable
-fun LoginContent(){
-    Column(
+fun LoginContent(viewModel: LoginViewModel){
+    Box(
         modifier = Modifier
             .fillMaxWidth(),
 
     ) {
-        Box{
             BoxHeader()
-            CardForm()
-        }
-
+            CardForm(viewModel)
     }
 }
 
@@ -81,14 +81,7 @@ fun BoxHeader(){
 }
 
 @Composable
-fun CardForm(){
-
-    var email by remember {
-        mutableStateOf("")
-    }
-    var password by remember {
-        mutableStateOf("")
-    }
+fun CardForm(viewModel: LoginViewModel){
 
     Card(
         modifier = Modifier
@@ -119,16 +112,16 @@ fun CardForm(){
             )
             DefaultTextField(
                 modifier = Modifier.padding(top = 25.dp),
-                value = email,
-                onValueChange = {email = it},
+                value = viewModel.email.value,
+                onValueChange = {viewModel.email.value = it},
                 label = "Correo electrónico",
                 icon = Icons.Default.Email,
                 keyboardType = KeyboardType.Email
             )
             DefaultTextField(
                 modifier = Modifier.padding(top = 5.dp),
-                value = password,
-                onValueChange = {password = it},
+                value = viewModel.password.value,
+                onValueChange = {viewModel.password.value = it},
                 label = "Contraseña",
                 icon = Icons.Default.Lock,
                 hideText = true
@@ -136,24 +129,11 @@ fun CardForm(){
             DefaultButton(
                 modifier = Modifier.fillMaxWidth().padding(vertical = 40.dp),
                 text = "INICIAR SESIÓN",
-                onClick = {  }
+                onClick = {
+                    Log.d("LoginContent", "Email: ${viewModel.email.value}")
+                    Log.d("LoginContent", "Password: ${viewModel.password.value}")
+                }
             )
-        }
-    }
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun GreetingPreview() {
-    GamerMVVMAppTheme(darkTheme = true) {
-        // A surface container using the 'background' color from the theme
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
-        ) {
-
-            LoginContent()
-
         }
     }
 }

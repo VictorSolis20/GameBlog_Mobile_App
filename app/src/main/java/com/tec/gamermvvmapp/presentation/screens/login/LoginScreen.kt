@@ -19,10 +19,12 @@ import com.tec.gamermvvmapp.presentation.ui.theme.GamerMVVMAppTheme
 @Composable
 fun LoginScreen(navController: NavHostController) {
 
+    val viewModel = LoginViewModel()
+
     Scaffold(
         topBar = {},
         content = {
-                  LoginContent()
+                  LoginContent(viewModel)
         },
         bottomBar = {
             LoginBottomBar(navController)
