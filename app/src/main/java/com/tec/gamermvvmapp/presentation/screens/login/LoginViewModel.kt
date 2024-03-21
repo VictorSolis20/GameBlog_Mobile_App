@@ -17,11 +17,12 @@ class LoginViewModel @Inject constructor(): ViewModel() {
     var isEmailValid: MutableState<Boolean> = mutableStateOf(false)
     var emailErrMsg: MutableState<String> = mutableStateOf("")
 
+    // PASSWORD
     var password: MutableState<String> = mutableStateOf("")
     var isPasswordValid: MutableState<Boolean> = mutableStateOf(false)
     var passwordErrMsg: MutableState<String> = mutableStateOf("")
 
-    // BUTTON
+    // ENABLE BUTTON
     var isEnabledLoginButton = false
     fun enabledLoginButton(){
         isEnabledLoginButton = isEmailValid.value && isPasswordValid.value

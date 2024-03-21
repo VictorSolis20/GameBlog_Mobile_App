@@ -53,7 +53,7 @@ fun DefaultTextField(
             visualTransformation = if (hideText) PasswordVisualTransformation() else VisualTransformation.None
         )
         Text(
-            modifier = Modifier.padding(top = 5.dp),
+            modifier = Modifier.padding(top = 2.dp),
             text = errorMsg,
             fontSize = 11.sp,
             color = Red700
