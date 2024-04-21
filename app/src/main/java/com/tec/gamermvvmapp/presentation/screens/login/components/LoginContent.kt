@@ -39,17 +39,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.tec.gamermvvmapp.R
 import com.tec.gamermvvmapp.domain.model.Response
 import com.tec.gamermvvmapp.presentation.components.DefaultButton
 import com.tec.gamermvvmapp.presentation.components.DefaultTextField
+import com.tec.gamermvvmapp.presentation.navigation.AppScreen
 import com.tec.gamermvvmapp.presentation.screens.login.LoginViewModel
 import com.tec.gamermvvmapp.presentation.ui.theme.Darkgray500
 import com.tec.gamermvvmapp.presentation.ui.theme.GamerMVVMAppTheme
 import com.tec.gamermvvmapp.presentation.ui.theme.Red500
 
 @Composable
-fun LoginContent(viewModel: LoginViewModel = hiltViewModel()){
+fun LoginContent(navController: NavHostController, viewModel: LoginViewModel = hiltViewModel()){
 
     val loginFlow = viewModel.loginFlow.collectAsState()
 
@@ -155,7 +158,9 @@ fun LoginContent(viewModel: LoginViewModel = hiltViewModel()){
                 }
             }
             is Response.Success -> {
-                Toast.makeText(LocalContext.current, "Usuario logeado", Toast.LENGTH_LONG).show()
+                LaunchedEffect(Unit){
+                    navController.navigate(route = AppScreen.Profile.route)
+                }
             }
             is Response.Failure -> {
                 Toast.makeText(LocalContext.current, it.exception?.message ?: "Error desconocido", Toast.LENGTH_LONG).show()
