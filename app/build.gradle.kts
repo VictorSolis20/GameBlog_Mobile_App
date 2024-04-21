@@ -64,10 +64,10 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.7.7")
 
     // DAGGER HILT
-    implementation("com.google.dagger:hilt-android:2.44")
+    implementation("com.google.dagger:hilt-android:2.51")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0-rc01")
     implementation("com.google.firebase:firebase-auth:22.3.1")
-    kapt("com.google.dagger:hilt-android-compiler:2.44")
+    kapt("com.google.dagger:hilt-android-compiler:2.51")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

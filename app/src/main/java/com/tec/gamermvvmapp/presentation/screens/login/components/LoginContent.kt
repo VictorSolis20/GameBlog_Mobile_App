@@ -1,6 +1,7 @@
 package com.tec.gamermvvmapp.presentation.screens.login.components
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -17,6 +18,7 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -28,6 +30,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -37,6 +40,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import com.tec.gamermvvmapp.R
+import com.tec.gamermvvmapp.domain.model.Response
 import com.tec.gamermvvmapp.presentation.components.DefaultButton
 import com.tec.gamermvvmapp.presentation.components.DefaultTextField
 import com.tec.gamermvvmapp.presentation.screens.login.LoginViewModel
@@ -46,10 +50,12 @@ import com.tec.gamermvvmapp.presentation.ui.theme.Red500
 
 @Composable
 fun LoginContent(viewModel: LoginViewModel = hiltViewModel()){
+
+    val loginFlow = viewModel.loginFlow.collectAsState()
+
     Box(
         modifier = Modifier
             .fillMaxWidth(),
-
     ) {
         Box(
             modifier = Modifier
@@ -129,12 +135,33 @@ fun LoginContent(viewModel: LoginViewModel = hiltViewModel()){
                         .padding(vertical = 40.dp),
                     text = "INICIAR SESIÓN",
                     onClick = {
-                        Log.d("LoginContent", "Email: ${viewModel.email.value}")
-                        Log.d("LoginContent", "Password: ${viewModel.password.value}")
+                        viewModel.login()
                     },
                     enabled = viewModel.isEnabledLoginButton
                 )
             }
+        }
+    }
+
+    loginFlow.value.let{
+        when(it){
+            // MOSTRAR QUE SE ESTA REALIZANDO LA PETICIÓN Y TODAVIA ESTA EN PROCESO
+            Response.Loading -> {
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier.fillMaxSize()
+                ){
+                    CircularProgressIndicator()
+                }
+            }
+            is Response.Success -> {
+                Toast.makeText(LocalContext.current, "Usuario logeado", Toast.LENGTH_LONG).show()
+            }
+            is Response.Failure -> {
+                Toast.makeText(LocalContext.current, it.exception?.message ?: "Error desconocido", Toast.LENGTH_LONG).show()
+            }
+
+            else -> {}
         }
     }
 }
