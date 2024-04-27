@@ -9,6 +9,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.tec.gamermvvmapp.presentation.components.DefaultButton
 import com.tec.gamermvvmapp.presentation.navigation.AppScreen
+import com.tec.gamermvvmapp.presentation.screens.profile.components.ProfileContent
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -16,15 +17,7 @@ fun ProfileScreen(navController: NavHostController, viewModel: ProfileViewModel 
     Scaffold(
         topBar = {},
         content = {
-            DefaultButton(
-                modifier = Modifier,
-                text = "Cerrar sesión",
-                onClick = {
-                    viewModel.logout()
-                    navController.navigate(route = AppScreen.Login.route){
-                        popUpTo(AppScreen.Profile.route){inclusive = true}
-                    }
-                })
+            ProfileContent(navController)
         },
         bottomBar = {}
     )
