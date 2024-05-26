@@ -84,9 +84,7 @@ fun ProfileContent(navController: NavHostController, viewModel: ProfileViewModel
             text = "Editar datos",
             color = Color.Gray,
             icon = Icons.Default.Edit,
-            onClick = {
-
-            }
+            onClick = { navController.navigate(route = AppScreen.ProfileEdit.route)}
         )
         Spacer(modifier = Modifier.height(10.dp))
         DefaultButton(
