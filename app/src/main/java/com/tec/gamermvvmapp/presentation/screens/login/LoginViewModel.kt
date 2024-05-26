@@ -21,21 +21,26 @@ class LoginViewModel @Inject constructor(private val authUseCases: AuthUseCases)
 
     // STATE FORM
     var state by mutableStateOf(LoginState())
-    private set
+        private set
 
     // EMAIL
-    var isEmailValid: Boolean by mutableStateOf(false)
-    var emailErrMsg: String by mutableStateOf("")
+    var isEmailValid by mutableStateOf(false)
+        private set
+    var emailErrMsg by mutableStateOf("")
+        private set
 
     // PASSWORD
-    var isPasswordValid: Boolean by mutableStateOf(false)
-    var passwordErrMsg: String by mutableStateOf("")
+    var isPasswordValid by mutableStateOf(false)
+        private set
+    var passwordErrMsg by mutableStateOf("")
+        private set
 
     // ENABLE BUTTON
     var isEnabledLoginButton = false
 
     // LOGIN RESPONSE
     var loginResponse by mutableStateOf<Response<FirebaseUser>?>(null)
+        private set
 
     val currentUser = authUseCases.getCurrentUser()
 

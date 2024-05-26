@@ -43,7 +43,7 @@ import com.tec.gamermvvmapp.presentation.ui.theme.Red500
 @Composable
 fun SignupContent(navController: NavHostController, viewModel: SignupViewModel = hiltViewModel()){
 
-    val signupFlow = viewModel.signupFlow.collectAsState()
+    val state = viewModel.state
 
     Box(
         modifier = Modifier
@@ -98,41 +98,41 @@ fun SignupContent(navController: NavHostController, viewModel: SignupViewModel =
                 )
                 DefaultTextField(
                     modifier = Modifier.padding(top = 25.dp),
-                    value = viewModel.username.value,
-                    onValueChange = {viewModel.username.value = it},
+                    value = state.username,
+                    onValueChange = {viewModel.onUsernameInput(it)},
                     label = "Nombre de usuario",
                     icon = Icons.Default.Person,
-                    errorMsg = viewModel.usernameErrMsg.value,
+                    errorMsg = viewModel.usernameErrMsg,
                     validateField = {viewModel.validateUsername()}
                 )
                 DefaultTextField(
                     modifier = Modifier.padding(top = 0.dp),
-                    value = viewModel.email.value,
-                    onValueChange = {viewModel.email.value = it},
+                    value = state.email,
+                    onValueChange = {viewModel.onEmailInput(it)},
                     label = "Correo electrónico",
                     icon = Icons.Default.Email,
                     keyboardType = KeyboardType.Email,
-                    errorMsg = viewModel.emailErrMsg.value,
+                    errorMsg = viewModel.emailErrMsg,
                     validateField = {viewModel.validateEmail()}
                 )
                 DefaultTextField(
                     modifier = Modifier.padding(top = 0.dp),
-                    value = viewModel.password.value,
-                    onValueChange = {viewModel.password.value = it},
+                    value = state.password,
+                    onValueChange = {viewModel.onPasswordInput(it)},
                     label = "Contraseña",
                     icon = Icons.Default.Lock,
                     hideText = true,
-                    errorMsg = viewModel.passwordErrMsg.value,
+                    errorMsg = viewModel.passwordErrMsg,
                     validateField = {viewModel.validatePassword()}
                 )
                 DefaultTextField(
                     modifier = Modifier.padding(top = 0.dp),
-                    value = viewModel.confirmPassword.value,
-                    onValueChange = {viewModel.confirmPassword.value = it},
+                    value = state.confirmPassword,
+                    onValueChange = {viewModel.onConfirmPasswordInput(it)},
                     label = "Confirmar contraseña",
                     icon = Icons.Outlined.Lock,
                     hideText = true,
-                    errorMsg = viewModel.confirmPasswordErrMsg.value,
+                    errorMsg = viewModel.confirmPasswordErrMsg,
                     validateField = {viewModel.validateConfirmPassword()}
                 )
                 DefaultButton(
@@ -144,31 +144,6 @@ fun SignupContent(navController: NavHostController, viewModel: SignupViewModel =
                     enabled = viewModel.isEnabledLoginButton
                 )
             }
-        }
-    }
-
-    signupFlow.value.let{
-        when(it){
-            Response.Loading -> {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ){
-                    CircularProgressIndicator()
-                }
-            }
-            is Response.Success -> {
-                LaunchedEffect(Unit) {
-                    viewModel.createUser()
-                    navController.popBackStack(AppScreen.Login.route, true)
-                    navController.navigate(route = AppScreen.Profile.route)
-                }
-            }
-            is Response.Failure -> {
-                Toast.makeText(LocalContext.current, it.exception?.message ?: "Error desconocido", Toast.LENGTH_LONG).show()
-            }
-
-            else -> {}
         }
     }
 }
